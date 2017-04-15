@@ -3,7 +3,8 @@
         "module": "commonjs",
         "noImplicitAny": false,
         "removeComments": true,
-        "target": "es6"
+        "target": "es6",
+        "outDir": "../../dist"
     },
     "include": [
         "typings/main.d.ts",

@@ -3,8 +3,8 @@
     "include": [
       "^package\\.json$",
       "^\\.env$",
-      "\\.ts$",
-      "^tsconfig\\.json$"
+      "src/server/\\.ts$",
+      "src/server/^tsconfig\\.json$"
     ]
   },
   "throttle": 2500
