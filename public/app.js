@@ -79,15 +79,13 @@ module.exports = React;
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
-var React = __webpack_require__(0);
-exports.Hello = function (props) {
-    return React.createElement("h1", null,
-        "Hello from ",
-        props.compiler,
-        " and ",
-        props.framework,
-        "!");
-};
+const React = __webpack_require__(0);
+exports.Hello = (props) => React.createElement("h1", null,
+    "Hello from ",
+    props.compiler,
+    " and ",
+    props.framework,
+    "!!");
 
 
 /***/ }),
@@ -102,10 +100,22 @@ module.exports = ReactDOM;
 
 "use strict";
 
+var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : new P(function (resolve) { resolve(result.value); }).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
 Object.defineProperty(exports, "__esModule", { value: true });
-var React = __webpack_require__(0);
-var ReactDOM = __webpack_require__(2);
-var hello_1 = __webpack_require__(1);
+const React = __webpack_require__(0);
+const ReactDOM = __webpack_require__(2);
+const hello_1 = __webpack_require__(1);
+let users;
+(() => __awaiter(this, void 0, void 0, function* () {
+    users = yield fetch('/users');
+}))();
 ReactDOM.render(React.createElement(hello_1.Hello, { compiler: "TypeScript", framework: "React" }), document.getElementById("example"));
 
 
