@@ -27,14 +27,15 @@ const sequelize = new sequelize_1.default('database', process.env.DB_USER, proce
     },
     storage: '.data/database.sqlite'
 });
-const setup = () => {
-    User.sync({ force: true })
-        .then(function () {
+function setup() {
+    return __awaiter(this, void 0, void 0, function* () {
+        yield User.sync({ force: true });
         for (var i = 0; i < users.length; i++) {
             User.create({ firstName: users[i][0], lastName: users[i][1] });
         }
     });
-};
+}
+;
 (() => __awaiter(this, void 0, void 0, function* () {
     try {
         yield sequelize.authenticate();
@@ -47,7 +48,7 @@ const setup = () => {
                 type: sequelize_1.default.STRING
             }
         });
-        setup();
+        yield setup();
     }
     catch (err) {
         console.log('Unable to connect to the database: ', err);

@@ -30,14 +30,11 @@ const sequelize = new Sequelize('database', process.env.DB_USER, process.env.DB_
 })
 
 // populate table with default users
-const setup = () => {
-  User.sync({force: true}) // using 'force' it drops the table users if it already exists, and creates a new one
-    .then(function(){
-      // Add the default users to the database
-      for(var i=0; i<users.length; i++){ // loop through all users
-        User.create({ firstName: users[i][0], lastName: users[i][1]}); // create a new entry in the users table
-      }
-    });  
+async function setup() {
+  await User.sync({force: true}) // using 'force' it drops the table users if it already exists, and creates a new one
+    for(var i=0; i<users.length; i++){ // loop through all users
+      User.create({ firstName: users[i][0], lastName: users[i][1]}); // create a new entry in the users table
+    } 
 }
 
 ;(async () => {
@@ -52,7 +49,7 @@ const setup = () => {
         type: Sequelize.STRING
       }
     });
-    setup();
+    await setup();
   } catch(err) {
     console.log('Unable to connect to the database: ', err)
   }
