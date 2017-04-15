@@ -250,5 +250,261 @@
       ]
     },
     "mtime": 1492216596242
+  },
+  "{\"filename\":\"/app/server.js\",\"env\":{},\"retainLines\":false,\"highlightCode\":true,\"suppressDeprecationMessages\":false,\"presets\":[],\"plugins\":[[[],null],[[],{\"loose\":false,\"spec\":false}],[[],null],[[],null],[[],{\"spec\":false}],[[],null],[[],{\"loose\":false}],[[],null],[[],null],[[],null],[[],{\"loose\":false}],[[],{\"loose\":false}],[[],null],[[],null],[[],null],[[],{\"loose\":false}],[[],null],[[],{\"loose\":false}],[[],null],[[],null],[[],{\"loose\":false}],[[],{\"async\":false,\"asyncGenerators\":false}]],\"ignore\":[],\"code\":true,\"metadata\":true,\"ast\":true,\"comments\":true,\"compact\":\"auto\",\"minified\":false,\"sourceRoot\":\"/app\",\"babelrc\":true,\"sourceType\":\"module\",\"moduleIds\":false,\"passPerPreset\":false,\"parserOpts\":false,\"generatorOpts\":false}:6.24.1": {
+    "metadata": {
+      "usedHelpers": [
+        "interopRequireDefault"
+      ],
+      "marked": [],
+      "modules": {
+        "imports": [
+          {
+            "source": "express",
+            "imported": [
+              "default"
+            ],
+            "specifiers": [
+              {
+                "kind": "named",
+                "imported": "default",
+                "local": "express"
+              }
+            ]
+          },
+          {
+            "source": "sequelize",
+            "imported": [
+              "default"
+            ],
+            "specifiers": [
+              {
+                "kind": "named",
+                "imported": "default",
+                "local": "Sequelize"
+              }
+            ]
+          }
+        ],
+        "exports": {
+          "exported": [],
+          "specifiers": []
+        }
+      }
+    },
+    "options": {
+      "filename": "/app/server.js",
+      "filenameRelative": "/app/server.js",
+      "env": {},
+      "retainLines": false,
+      "highlightCode": true,
+      "suppressDeprecationMessages": false,
+      "presets": [],
+      "plugins": [
+        [
+          [],
+          null
+        ],
+        [
+          [],
+          {
+            "loose": false,
+            "spec": false
+          }
+        ],
+        [
+          [],
+          null
+        ],
+        [
+          [],
+          null
+        ],
+        [
+          [],
+          {
+            "spec": false
+          }
+        ],
+        [
+          [],
+          null
+        ],
+        [
+          [],
+          {
+            "loose": false
+          }
+        ],
+        [
+          [],
+          null
+        ],
+        [
+          [],
+          null
+        ],
+        [
+          [],
+          null
+        ],
+        [
+          [],
+          {
+            "loose": false
+          }
+        ],
+        [
+          [],
+          {
+            "loose": false
+          }
+        ],
+        [
+          [],
+          null
+        ],
+        [
+          [],
+          null
+        ],
+        [
+          [],
+          null
+        ],
+        [
+          [],
+          {
+            "loose": false
+          }
+        ],
+        [
+          [],
+          null
+        ],
+        [
+          [],
+          {
+            "loose": false
+          }
+        ],
+        [
+          [],
+          null
+        ],
+        [
+          [],
+          null
+        ],
+        [
+          [],
+          {
+            "loose": false
+          }
+        ],
+        [
+          [],
+          {
+            "async": false,
+            "asyncGenerators": false
+          }
+        ]
+      ],
+      "ignore": [],
+      "code": true,
+      "metadata": true,
+      "ast": false,
+      "comments": true,
+      "compact": "auto",
+      "minified": false,
+      "sourceMaps": "both",
+      "sourceMapTarget": "server.js",
+      "sourceFileName": "server.js",
+      "sourceRoot": "/app",
+      "babelrc": false,
+      "sourceType": "module",
+      "moduleRoot": "/app",
+      "moduleIds": false,
+      "passPerPreset": false,
+      "parserOpts": false,
+      "generatorOpts": false,
+      "basename": "server"
+    },
+    "ignored": false,
+    "code": "'use strict';\n\nvar _express = require('express');\n\nvar _express2 = _interopRequireDefault(_express);\n\nvar _sequelize = require('sequelize');\n\nvar _sequelize2 = _interopRequireDefault(_sequelize);\n\nfunction _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }\n\n// server.js\n// where your node app starts\n\n// init project\nvar app = (0, _express2.default)();\n\n// default user list\nvar users = [[\"John\", \"Hancock\"], [\"Liz\", \"Smith\"], [\"Ahmed\", \"Khan\"]];\nvar User;\n\n// setup a new database\n// using database credentials set in .env\nvar sequelize = new _sequelize2.default('database', process.env.DB_USER, process.env.DB_PASS, {\n  host: '0.0.0.0',\n  dialect: 'sqlite',\n  pool: {\n    max: 5,\n    min: 0,\n    idle: 10000\n  },\n  // Security note: the database is saved to the file `database.sqlite` on the local filesystem. It's deliberately placed in the `.data` directory\n  // which doesn't get copied if someone remixes the project.\n  storage: '.data/database.sqlite'\n});\n\n// authenticate with the database\nsequelize.authenticate().then(function (err) {\n  console.log('Connection has been established successfully.');\n  // define a new table 'users'\n  User = sequelize.define('users', {\n    firstName: {\n      type: _sequelize2.default.STRING\n    },\n    lastName: {\n      type: _sequelize2.default.STRING\n    }\n  });\n\n  setup();\n}).catch(function (err) {\n  console.log('Unable to connect to the database: ', err);\n});\n\n// populate table with default users\nvar setup = function setup() {\n  User.sync({ force: true }) // using 'force' it drops the table users if it already exists, and creates a new one\n  .then(function () {\n    // Add the default users to the database\n    for (var i = 0; i < users.length; i++) {\n      // loop through all users\n      User.create({ firstName: users[i][0], lastName: users[i][1] }); // create a new entry in the users table\n    }\n  });\n};\n\n// http://expressjs.com/en/starter/static-files.html\napp.use(_express2.default.static('public'));\n\n// http://expressjs.com/en/starter/basic-routing.html\napp.get(\"/\", function (request, response) {\n  response.sendFile(__dirname + '/views/index.html');\n});\n\napp.get(\"/users\", function (request, response) {\n  var dbUsers = [];\n  User.findAll().then(function (users) {\n    // find all entries in the users tables\n    users.forEach(function (user) {\n      dbUsers.push([user.firstName, user.lastName]); // adds their info to the dbUsers value\n    });\n    response.send(dbUsers); // sends dbUsers back to the page\n  });\n});\n\n// creates a new entry in the users table with the submitted values\napp.post(\"/users\", function (request, response) {\n  User.create({ firstName: request.query.fName, lastName: request.query.lName });\n  response.sendStatus(200);\n});\n\n// drops the table users if it already exists, populates new users table it with just the default users.\napp.get(\"/reset\", function (request, response) {\n  setup();\n  response.redirect(\"/\");\n});\n\n// removes all entries from the users table\napp.get(\"/clear\", function (request, response) {\n  User.destroy({ where: {} });\n  response.redirect(\"/\");\n});\n\n// listen for requests :)\nvar listener = app.listen(process.env.PORT, function () {\n  console.log('Your app is listening on port ' + listener.address().port);\n});\n//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInNlcnZlci5qcyJdLCJuYW1lcyI6WyJhcHAiLCJ1c2VycyIsIlVzZXIiLCJzZXF1ZWxpemUiLCJwcm9jZXNzIiwiZW52IiwiREJfVVNFUiIsIkRCX1BBU1MiLCJob3N0IiwiZGlhbGVjdCIsInBvb2wiLCJtYXgiLCJtaW4iLCJpZGxlIiwic3RvcmFnZSIsImF1dGhlbnRpY2F0ZSIsInRoZW4iLCJlcnIiLCJjb25zb2xlIiwibG9nIiwiZGVmaW5lIiwiZmlyc3ROYW1lIiwidHlwZSIsIlNUUklORyIsImxhc3ROYW1lIiwic2V0dXAiLCJjYXRjaCIsInN5bmMiLCJmb3JjZSIsImkiLCJsZW5ndGgiLCJjcmVhdGUiLCJ1c2UiLCJzdGF0aWMiLCJnZXQiLCJyZXF1ZXN0IiwicmVzcG9uc2UiLCJzZW5kRmlsZSIsIl9fZGlybmFtZSIsImRiVXNlcnMiLCJmaW5kQWxsIiwiZm9yRWFjaCIsInVzZXIiLCJwdXNoIiwic2VuZCIsInBvc3QiLCJxdWVyeSIsImZOYW1lIiwibE5hbWUiLCJzZW5kU3RhdHVzIiwicmVkaXJlY3QiLCJkZXN0cm95Iiwid2hlcmUiLCJsaXN0ZW5lciIsImxpc3RlbiIsIlBPUlQiLCJhZGRyZXNzIiwicG9ydCJdLCJtYXBwaW5ncyI6Ijs7QUFJQTs7OztBQUNBOzs7Ozs7QUFMQTtBQUNBOztBQUVBO0FBR0EsSUFBTUEsTUFBTSx3QkFBWjs7QUFFQTtBQUNBLElBQUlDLFFBQVEsQ0FDTixDQUFDLE1BQUQsRUFBUSxTQUFSLENBRE0sRUFFTixDQUFDLEtBQUQsRUFBTyxPQUFQLENBRk0sRUFHTixDQUFDLE9BQUQsRUFBUyxNQUFULENBSE0sQ0FBWjtBQUtBLElBQUlDLElBQUo7O0FBRUE7QUFDQTtBQUNBLElBQUlDLFlBQVksd0JBQWMsVUFBZCxFQUEwQkMsUUFBUUMsR0FBUixDQUFZQyxPQUF0QyxFQUErQ0YsUUFBUUMsR0FBUixDQUFZRSxPQUEzRCxFQUFvRTtBQUNsRkMsUUFBTSxTQUQ0RTtBQUVsRkMsV0FBUyxRQUZ5RTtBQUdsRkMsUUFBTTtBQUNKQyxTQUFLLENBREQ7QUFFSkMsU0FBSyxDQUZEO0FBR0pDLFVBQU07QUFIRixHQUg0RTtBQVFoRjtBQUNBO0FBQ0ZDLFdBQVM7QUFWeUUsQ0FBcEUsQ0FBaEI7O0FBYUE7QUFDQVgsVUFBVVksWUFBVixHQUNHQyxJQURILENBQ1EsVUFBQ0MsR0FBRCxFQUFTO0FBQ2JDLFVBQVFDLEdBQVIsQ0FBWSwrQ0FBWjtBQUNBO0FBQ0FqQixTQUFPQyxVQUFVaUIsTUFBVixDQUFpQixPQUFqQixFQUEwQjtBQUMvQkMsZUFBVztBQUNUQyxZQUFNLG9CQUFVQztBQURQLEtBRG9CO0FBSS9CQyxjQUFVO0FBQ1JGLFlBQU0sb0JBQVVDO0FBRFI7QUFKcUIsR0FBMUIsQ0FBUDs7QUFTQUU7QUFDRCxDQWRILEVBZUdDLEtBZkgsQ0FlUyxVQUFDVCxHQUFELEVBQVM7QUFDZEMsVUFBUUMsR0FBUixDQUFZLHFDQUFaLEVBQW1ERixHQUFuRDtBQUNELENBakJIOztBQW1CQTtBQUNBLElBQU1RLFFBQVEsU0FBUkEsS0FBUSxHQUFNO0FBQ2xCdkIsT0FBS3lCLElBQUwsQ0FBVSxFQUFDQyxPQUFPLElBQVIsRUFBVixFQUF5QjtBQUF6QixHQUNHWixJQURILENBQ1EsWUFBVTtBQUNkO0FBQ0EsU0FBSSxJQUFJYSxJQUFFLENBQVYsRUFBYUEsSUFBRTVCLE1BQU02QixNQUFyQixFQUE2QkQsR0FBN0IsRUFBaUM7QUFBRTtBQUNqQzNCLFdBQUs2QixNQUFMLENBQVksRUFBRVYsV0FBV3BCLE1BQU00QixDQUFOLEVBQVMsQ0FBVCxDQUFiLEVBQTBCTCxVQUFVdkIsTUFBTTRCLENBQU4sRUFBUyxDQUFULENBQXBDLEVBQVosRUFEK0IsQ0FDZ0M7QUFDaEU7QUFDRixHQU5IO0FBT0QsQ0FSRDs7QUFVQTtBQUNBN0IsSUFBSWdDLEdBQUosQ0FBUSxrQkFBUUMsTUFBUixDQUFlLFFBQWYsQ0FBUjs7QUFFQTtBQUNBakMsSUFBSWtDLEdBQUosQ0FBUSxHQUFSLEVBQWEsVUFBQ0MsT0FBRCxFQUFVQyxRQUFWLEVBQXVCO0FBQ2xDQSxXQUFTQyxRQUFULENBQWtCQyxZQUFZLG1CQUE5QjtBQUNELENBRkQ7O0FBSUF0QyxJQUFJa0MsR0FBSixDQUFRLFFBQVIsRUFBa0IsVUFBQ0MsT0FBRCxFQUFVQyxRQUFWLEVBQXVCO0FBQ3ZDLE1BQUlHLFVBQVEsRUFBWjtBQUNBckMsT0FBS3NDLE9BQUwsR0FBZXhCLElBQWYsQ0FBb0IsVUFBQ2YsS0FBRCxFQUFXO0FBQUU7QUFDL0JBLFVBQU13QyxPQUFOLENBQWMsVUFBU0MsSUFBVCxFQUFlO0FBQzNCSCxjQUFRSSxJQUFSLENBQWEsQ0FBQ0QsS0FBS3JCLFNBQU4sRUFBZ0JxQixLQUFLbEIsUUFBckIsQ0FBYixFQUQyQixDQUNtQjtBQUMvQyxLQUZEO0FBR0FZLGFBQVNRLElBQVQsQ0FBY0wsT0FBZCxFQUo2QixDQUlMO0FBQ3pCLEdBTEQ7QUFNRCxDQVJEOztBQVVBO0FBQ0F2QyxJQUFJNkMsSUFBSixDQUFTLFFBQVQsRUFBbUIsVUFBVVYsT0FBVixFQUFtQkMsUUFBbkIsRUFBNkI7QUFDOUNsQyxPQUFLNkIsTUFBTCxDQUFZLEVBQUVWLFdBQVdjLFFBQVFXLEtBQVIsQ0FBY0MsS0FBM0IsRUFBa0N2QixVQUFVVyxRQUFRVyxLQUFSLENBQWNFLEtBQTFELEVBQVo7QUFDQVosV0FBU2EsVUFBVCxDQUFvQixHQUFwQjtBQUNELENBSEQ7O0FBS0E7QUFDQWpELElBQUlrQyxHQUFKLENBQVEsUUFBUixFQUFrQixVQUFVQyxPQUFWLEVBQW1CQyxRQUFuQixFQUE2QjtBQUM3Q1g7QUFDQVcsV0FBU2MsUUFBVCxDQUFrQixHQUFsQjtBQUNELENBSEQ7O0FBS0E7QUFDQWxELElBQUlrQyxHQUFKLENBQVEsUUFBUixFQUFrQixVQUFVQyxPQUFWLEVBQW1CQyxRQUFuQixFQUE2QjtBQUM3Q2xDLE9BQUtpRCxPQUFMLENBQWEsRUFBQ0MsT0FBTyxFQUFSLEVBQWI7QUFDQWhCLFdBQVNjLFFBQVQsQ0FBa0IsR0FBbEI7QUFDRCxDQUhEOztBQUtBO0FBQ0EsSUFBSUcsV0FBV3JELElBQUlzRCxNQUFKLENBQVdsRCxRQUFRQyxHQUFSLENBQVlrRCxJQUF2QixFQUE2QixZQUFZO0FBQ3REckMsVUFBUUMsR0FBUixDQUFZLG1DQUFtQ2tDLFNBQVNHLE9BQVQsR0FBbUJDLElBQWxFO0FBQ0QsQ0FGYyxDQUFmIiwiZmlsZSI6InNlcnZlci5qcyIsInNvdXJjZVJvb3QiOiIvYXBwIiwic291cmNlc0NvbnRlbnQiOlsiLy8gc2VydmVyLmpzXG4vLyB3aGVyZSB5b3VyIG5vZGUgYXBwIHN0YXJ0c1xuXG4vLyBpbml0IHByb2plY3RcbmltcG9ydCBleHByZXNzIGZyb20gJ2V4cHJlc3MnXG5pbXBvcnQgU2VxdWVsaXplIGZyb20gJ3NlcXVlbGl6ZSdcbmNvbnN0IGFwcCA9IGV4cHJlc3MoKTtcblxuLy8gZGVmYXVsdCB1c2VyIGxpc3RcbnZhciB1c2VycyA9IFtcbiAgICAgIFtcIkpvaG5cIixcIkhhbmNvY2tcIl0sXG4gICAgICBbXCJMaXpcIixcIlNtaXRoXCJdLFxuICAgICAgW1wiQWhtZWRcIixcIktoYW5cIl1cbiAgICBdO1xudmFyIFVzZXI7XG5cbi8vIHNldHVwIGEgbmV3IGRhdGFiYXNlXG4vLyB1c2luZyBkYXRhYmFzZSBjcmVkZW50aWFscyBzZXQgaW4gLmVudlxudmFyIHNlcXVlbGl6ZSA9IG5ldyBTZXF1ZWxpemUoJ2RhdGFiYXNlJywgcHJvY2Vzcy5lbnYuREJfVVNFUiwgcHJvY2Vzcy5lbnYuREJfUEFTUywge1xuICBob3N0OiAnMC4wLjAuMCcsXG4gIGRpYWxlY3Q6ICdzcWxpdGUnLFxuICBwb29sOiB7XG4gICAgbWF4OiA1LFxuICAgIG1pbjogMCxcbiAgICBpZGxlOiAxMDAwMFxuICB9LFxuICAgIC8vIFNlY3VyaXR5IG5vdGU6IHRoZSBkYXRhYmFzZSBpcyBzYXZlZCB0byB0aGUgZmlsZSBgZGF0YWJhc2Uuc3FsaXRlYCBvbiB0aGUgbG9jYWwgZmlsZXN5c3RlbS4gSXQncyBkZWxpYmVyYXRlbHkgcGxhY2VkIGluIHRoZSBgLmRhdGFgIGRpcmVjdG9yeVxuICAgIC8vIHdoaWNoIGRvZXNuJ3QgZ2V0IGNvcGllZCBpZiBzb21lb25lIHJlbWl4ZXMgdGhlIHByb2plY3QuXG4gIHN0b3JhZ2U6ICcuZGF0YS9kYXRhYmFzZS5zcWxpdGUnXG59KTtcblxuLy8gYXV0aGVudGljYXRlIHdpdGggdGhlIGRhdGFiYXNlXG5zZXF1ZWxpemUuYXV0aGVudGljYXRlKClcbiAgLnRoZW4oKGVycikgPT4ge1xuICAgIGNvbnNvbGUubG9nKCdDb25uZWN0aW9uIGhhcyBiZWVuIGVzdGFibGlzaGVkIHN1Y2Nlc3NmdWxseS4nKTtcbiAgICAvLyBkZWZpbmUgYSBuZXcgdGFibGUgJ3VzZXJzJ1xuICAgIFVzZXIgPSBzZXF1ZWxpemUuZGVmaW5lKCd1c2VycycsIHtcbiAgICAgIGZpcnN0TmFtZToge1xuICAgICAgICB0eXBlOiBTZXF1ZWxpemUuU1RSSU5HXG4gICAgICB9LFxuICAgICAgbGFzdE5hbWU6IHtcbiAgICAgICAgdHlwZTogU2VxdWVsaXplLlNUUklOR1xuICAgICAgfVxuICAgIH0pO1xuICAgIFxuICAgIHNldHVwKCk7XG4gIH0pXG4gIC5jYXRjaCgoZXJyKSA9PiB7XG4gICAgY29uc29sZS5sb2coJ1VuYWJsZSB0byBjb25uZWN0IHRvIHRoZSBkYXRhYmFzZTogJywgZXJyKTtcbiAgfSk7XG5cbi8vIHBvcHVsYXRlIHRhYmxlIHdpdGggZGVmYXVsdCB1c2Vyc1xuY29uc3Qgc2V0dXAgPSAoKSA9PiB7XG4gIFVzZXIuc3luYyh7Zm9yY2U6IHRydWV9KSAvLyB1c2luZyAnZm9yY2UnIGl0IGRyb3BzIHRoZSB0YWJsZSB1c2VycyBpZiBpdCBhbHJlYWR5IGV4aXN0cywgYW5kIGNyZWF0ZXMgYSBuZXcgb25lXG4gICAgLnRoZW4oZnVuY3Rpb24oKXtcbiAgICAgIC8vIEFkZCB0aGUgZGVmYXVsdCB1c2VycyB0byB0aGUgZGF0YWJhc2VcbiAgICAgIGZvcih2YXIgaT0wOyBpPHVzZXJzLmxlbmd0aDsgaSsrKXsgLy8gbG9vcCB0aHJvdWdoIGFsbCB1c2Vyc1xuICAgICAgICBVc2VyLmNyZWF0ZSh7IGZpcnN0TmFtZTogdXNlcnNbaV1bMF0sIGxhc3ROYW1lOiB1c2Vyc1tpXVsxXX0pOyAvLyBjcmVhdGUgYSBuZXcgZW50cnkgaW4gdGhlIHVzZXJzIHRhYmxlXG4gICAgICB9XG4gICAgfSk7ICBcbn1cblxuLy8gaHR0cDovL2V4cHJlc3Nqcy5jb20vZW4vc3RhcnRlci9zdGF0aWMtZmlsZXMuaHRtbFxuYXBwLnVzZShleHByZXNzLnN0YXRpYygncHVibGljJykpO1xuXG4vLyBodHRwOi8vZXhwcmVzc2pzLmNvbS9lbi9zdGFydGVyL2Jhc2ljLXJvdXRpbmcuaHRtbFxuYXBwLmdldChcIi9cIiwgKHJlcXVlc3QsIHJlc3BvbnNlKSA9PiB7XG4gIHJlc3BvbnNlLnNlbmRGaWxlKF9fZGlybmFtZSArICcvdmlld3MvaW5kZXguaHRtbCcpO1xufSk7XG5cbmFwcC5nZXQoXCIvdXNlcnNcIiwgKHJlcXVlc3QsIHJlc3BvbnNlKSA9PiB7XG4gIHZhciBkYlVzZXJzPVtdO1xuICBVc2VyLmZpbmRBbGwoKS50aGVuKCh1c2VycykgPT4geyAvLyBmaW5kIGFsbCBlbnRyaWVzIGluIHRoZSB1c2VycyB0YWJsZXNcbiAgICB1c2Vycy5mb3JFYWNoKGZ1bmN0aW9uKHVzZXIpIHtcbiAgICAgIGRiVXNlcnMucHVzaChbdXNlci5maXJzdE5hbWUsdXNlci5sYXN0TmFtZV0pOyAvLyBhZGRzIHRoZWlyIGluZm8gdG8gdGhlIGRiVXNlcnMgdmFsdWVcbiAgICB9KTtcbiAgICByZXNwb25zZS5zZW5kKGRiVXNlcnMpOyAvLyBzZW5kcyBkYlVzZXJzIGJhY2sgdG8gdGhlIHBhZ2VcbiAgfSk7XG59KTtcblxuLy8gY3JlYXRlcyBhIG5ldyBlbnRyeSBpbiB0aGUgdXNlcnMgdGFibGUgd2l0aCB0aGUgc3VibWl0dGVkIHZhbHVlc1xuYXBwLnBvc3QoXCIvdXNlcnNcIiwgZnVuY3Rpb24gKHJlcXVlc3QsIHJlc3BvbnNlKSB7XG4gIFVzZXIuY3JlYXRlKHsgZmlyc3ROYW1lOiByZXF1ZXN0LnF1ZXJ5LmZOYW1lLCBsYXN0TmFtZTogcmVxdWVzdC5xdWVyeS5sTmFtZX0pO1xuICByZXNwb25zZS5zZW5kU3RhdHVzKDIwMCk7XG59KTtcblxuLy8gZHJvcHMgdGhlIHRhYmxlIHVzZXJzIGlmIGl0IGFscmVhZHkgZXhpc3RzLCBwb3B1bGF0ZXMgbmV3IHVzZXJzIHRhYmxlIGl0IHdpdGgganVzdCB0aGUgZGVmYXVsdCB1c2Vycy5cbmFwcC5nZXQoXCIvcmVzZXRcIiwgZnVuY3Rpb24gKHJlcXVlc3QsIHJlc3BvbnNlKSB7XG4gIHNldHVwKCk7XG4gIHJlc3BvbnNlLnJlZGlyZWN0KFwiL1wiKTtcbn0pO1xuXG4vLyByZW1vdmVzIGFsbCBlbnRyaWVzIGZyb20gdGhlIHVzZXJzIHRhYmxlXG5hcHAuZ2V0KFwiL2NsZWFyXCIsIGZ1bmN0aW9uIChyZXF1ZXN0LCByZXNwb25zZSkge1xuICBVc2VyLmRlc3Ryb3koe3doZXJlOiB7fX0pO1xuICByZXNwb25zZS5yZWRpcmVjdChcIi9cIik7XG59KTtcblxuLy8gbGlzdGVuIGZvciByZXF1ZXN0cyA6KVxudmFyIGxpc3RlbmVyID0gYXBwLmxpc3Rlbihwcm9jZXNzLmVudi5QT1JULCBmdW5jdGlvbiAoKSB7XG4gIGNvbnNvbGUubG9nKCdZb3VyIGFwcCBpcyBsaXN0ZW5pbmcgb24gcG9ydCAnICsgbGlzdGVuZXIuYWRkcmVzcygpLnBvcnQpO1xufSk7Il19",
+    "ast": null,
+    "map": {
+      "version": 3,
+      "sources": [
+        "server.js"
+      ],
+      "names": [
+        "app",
+        "users",
+        "User",
+        "sequelize",
+        "process",
+        "env",
+        "DB_USER",
+        "DB_PASS",
+        "host",
+        "dialect",
+        "pool",
+        "max",
+        "min",
+        "idle",
+        "storage",
+        "authenticate",
+        "then",
+        "err",
+        "console",
+        "log",
+        "define",
+        "firstName",
+        "type",
+        "STRING",
+        "lastName",
+        "setup",
+        "catch",
+        "sync",
+        "force",
+        "i",
+        "length",
+        "create",
+        "use",
+        "static",
+        "get",
+        "request",
+        "response",
+        "sendFile",
+        "__dirname",
+        "dbUsers",
+        "findAll",
+        "forEach",
+        "user",
+        "push",
+        "send",
+        "post",
+        "query",
+        "fName",
+        "lName",
+        "sendStatus",
+        "redirect",
+        "destroy",
+        "where",
+        "listener",
+        "listen",
+        "PORT",
+        "address",
+        "port"
+      ],
+      "mappings": "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",
+      "file": "server.js",
+      "sourceRoot": "/app",
+      "sourcesContent": [
+        "// server.js\n// where your node app starts\n\n// init project\nimport express from 'express'\nimport Sequelize from 'sequelize'\nconst app = express();\n\n// default user list\nvar users = [\n      [\"John\",\"Hancock\"],\n      [\"Liz\",\"Smith\"],\n      [\"Ahmed\",\"Khan\"]\n    ];\nvar User;\n\n// setup a new database\n// using database credentials set in .env\nvar sequelize = new Sequelize('database', process.env.DB_USER, process.env.DB_PASS, {\n  host: '0.0.0.0',\n  dialect: 'sqlite',\n  pool: {\n    max: 5,\n    min: 0,\n    idle: 10000\n  },\n    // Security note: the database is saved to the file `database.sqlite` on the local filesystem. It's deliberately placed in the `.data` directory\n    // which doesn't get copied if someone remixes the project.\n  storage: '.data/database.sqlite'\n});\n\n// authenticate with the database\nsequelize.authenticate()\n  .then((err) => {\n    console.log('Connection has been established successfully.');\n    // define a new table 'users'\n    User = sequelize.define('users', {\n      firstName: {\n        type: Sequelize.STRING\n      },\n      lastName: {\n        type: Sequelize.STRING\n      }\n    });\n    \n    setup();\n  })\n  .catch((err) => {\n    console.log('Unable to connect to the database: ', err);\n  });\n\n// populate table with default users\nconst setup = () => {\n  User.sync({force: true}) // using 'force' it drops the table users if it already exists, and creates a new one\n    .then(function(){\n      // Add the default users to the database\n      for(var i=0; i<users.length; i++){ // loop through all users\n        User.create({ firstName: users[i][0], lastName: users[i][1]}); // create a new entry in the users table\n      }\n    });  \n}\n\n// http://expressjs.com/en/starter/static-files.html\napp.use(express.static('public'));\n\n// http://expressjs.com/en/starter/basic-routing.html\napp.get(\"/\", (request, response) => {\n  response.sendFile(__dirname + '/views/index.html');\n});\n\napp.get(\"/users\", (request, response) => {\n  var dbUsers=[];\n  User.findAll().then((users) => { // find all entries in the users tables\n    users.forEach(function(user) {\n      dbUsers.push([user.firstName,user.lastName]); // adds their info to the dbUsers value\n    });\n    response.send(dbUsers); // sends dbUsers back to the page\n  });\n});\n\n// creates a new entry in the users table with the submitted values\napp.post(\"/users\", function (request, response) {\n  User.create({ firstName: request.query.fName, lastName: request.query.lName});\n  response.sendStatus(200);\n});\n\n// drops the table users if it already exists, populates new users table it with just the default users.\napp.get(\"/reset\", function (request, response) {\n  setup();\n  response.redirect(\"/\");\n});\n\n// removes all entries from the users table\napp.get(\"/clear\", function (request, response) {\n  User.destroy({where: {}});\n  response.redirect(\"/\");\n});\n\n// listen for requests :)\nvar listener = app.listen(process.env.PORT, function () {\n  console.log('Your app is listening on port ' + listener.address().port);\n});"
+      ]
+    },
+    "mtime": 1492216596242
   }
 }
