@@ -5,8 +5,7 @@
         "noImplicitAny": false,
         "module": "commonjs",
         "target": "es5",
-        "jsx": "react",
-        "lib": "ES2015"
+        "jsx": "react"
     },
     "include": [
         "typings/main.d.ts",

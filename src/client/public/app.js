@@ -70,7 +70,7 @@
 /* 0 */
 /***/ (function(module, exports) {
 
-throw new Error("Module parse failed: /app/node_modules/awesome-typescript-loader/dist/entry.js??ref--0!/app/src/client/app.tsx Unexpected token (6:16)\nYou may need an appropriate loader to handle this file type.\n| var ReactDOM = require(\"react-dom\");\r\n| var hello_1 = require(\"./hello\");\r\n| ReactDOM.render(<hello_1.Hello compiler=\"TypeScript\" framework=\"React\"/>, document.getElementById(\"example\"));\r\n| ");
+throw new Error("Module parse failed: /app/src/client/app.tsx Unexpected token (6:4)\nYou may need an appropriate loader to handle this file type.\n| \n| ReactDOM.render(\n|     <Hello compiler=\"TypeScript\" framework=\"React\" />,\n|     document.getElementById(\"example\")\n| );");
 
 /***/ })
 /******/ ]);
