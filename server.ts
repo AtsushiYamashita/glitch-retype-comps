@@ -1,7 +1,3 @@
-// server.js
-// where your node app starts
-
-// init project
 import * as express from 'express'
 import Sequelize from 'sequelize'
 const app = express()
@@ -63,35 +59,34 @@ app.get("/", (request, response) => {
   response.sendFile(__dirname + '/views/index.html');
 });
 
-app.get("/users", (request, response) => {
+app.get("/users", async (request, response) => {
   var dbUsers=[];
-  User.findAll().then((users) => { // find all entries in the users tables
-    users.forEach(function(user) {
-      dbUsers.push([user.firstName,user.lastName]); // adds their info to the dbUsers value
-    });
-    response.send(dbUsers); // sends dbUsers back to the page
+  const users = await User.findAll() // find all entries in the users tables
+  users.forEach((user) => {
+    dbUsers.push([user.firstName,user.lastName]); // adds their info to the dbUsers value
   });
+  response.send(dbUsers); // sends dbUsers back to the page
 });
 
 // creates a new entry in the users table with the submitted values
-app.post("/users", function (request, response) {
-  User.create({ firstName: request.query.fName, lastName: request.query.lName});
+app.post("/users", async (request, response) => {
+  await User.create({ firstName: request.query.fName, lastName: request.query.lName});
   response.sendStatus(200);
 });
 
 // drops the table users if it already exists, populates new users table it with just the default users.
-app.get("/reset", function (request, response) {
-  setup();
+app.get("/reset", async (request, response) => {
+  await setup();
   response.redirect("/");
 });
 
 // removes all entries from the users table
-app.get("/clear", function (request, response) {
-  User.destroy({where: {}});
+app.get("/clear", async (request, response) => {
+  await User.destroy({where: {}});
   response.redirect("/");
 });
 
 // listen for requests :)
-var listener = app.listen(process.env.PORT, function () {
+var listener = app.listen(process.env.PORT, () => {
   console.log('Your app is listening on port ' + listener.address().port);
 });

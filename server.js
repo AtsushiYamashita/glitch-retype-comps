@@ -58,27 +58,26 @@ app.use(express.static('public'));
 app.get("/", (request, response) => {
     response.sendFile(__dirname + '/views/index.html');
 });
-app.get("/users", (request, response) => {
+app.get("/users", (request, response) => __awaiter(this, void 0, void 0, function* () {
     var dbUsers = [];
-    User.findAll().then((users) => {
-        users.forEach(function (user) {
-            dbUsers.push([user.firstName, user.lastName]);
-        });
-        response.send(dbUsers);
+    const users = yield User.findAll();
+    users.forEach((user) => {
+        dbUsers.push([user.firstName, user.lastName]);
     });
-});
-app.post("/users", function (request, response) {
-    User.create({ firstName: request.query.fName, lastName: request.query.lName });
+    response.send(dbUsers);
+}));
+app.post("/users", (request, response) => __awaiter(this, void 0, void 0, function* () {
+    yield User.create({ firstName: request.query.fName, lastName: request.query.lName });
     response.sendStatus(200);
-});
-app.get("/reset", function (request, response) {
-    setup();
+}));
+app.get("/reset", (request, response) => __awaiter(this, void 0, void 0, function* () {
+    yield setup();
     response.redirect("/");
-});
-app.get("/clear", function (request, response) {
-    User.destroy({ where: {} });
+}));
+app.get("/clear", (request, response) => __awaiter(this, void 0, void 0, function* () {
+    yield User.destroy({ where: {} });
     response.redirect("/");
-});
-var listener = app.listen(process.env.PORT, function () {
+}));
+var listener = app.listen(process.env.PORT, () => {
     console.log('Your app is listening on port ' + listener.address().port);
 });
