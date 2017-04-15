@@ -27,9 +27,9 @@ const sequelize = new Sequelize('database', process.env.DB_USER, process.env.DB_
 // populate table with default users
 async function setup() {
   await User.sync({force: true}) // using 'force' it drops the table users if it already exists, and creates a new one
-    for(var i=0; i<users.length; i++){
-      User.create({ firstName: users[i][0], lastName: users[i][1]}); // create a new entry in the users table
-    } 
+  for(var i=0; i<users.length; i++){
+    User.create({ firstName: users[i][0], lastName: users[i][1]}); // create a new entry in the users table
+  } 
 }
 
 ;(async () => {
@@ -50,26 +50,21 @@ async function setup() {
   }
 })()
 
-// http://expressjs.com/en/starter/static-files.html
 app.use(express.static('public'));
 
-// http://expressjs.com/en/starter/basic-routing.html
 app.get("/", (request, response) => {
   response.sendFile(__dirname + '/views/index.html');
 });
 
 app.get("/users", async (request, response) => {
-  var dbUsers=[];
-  const users = await User.findAll() // find all entries in the users tables
-  users.forEach((user) => {
-    dbUsers.push([user.firstName,user.lastName]); // adds their info to the dbUsers value
-  });
-  response.send(dbUsers); // sends dbUsers back to the page
+  const users = await User.findAll().map((user) => { return [user.firstName, user.lastName]})
+  response.send(users);
 });
 
 // creates a new entry in the users table with the submitted values
 app.post("/users", async (request, response) => {
-  await User.create({ firstName: request.query.fName, lastName: request.query.lName});
+  const {firstName, lastName} = request.query
+  await User.create({ firstName: firstName, lastName: lastName});
   response.sendStatus(200);
 });
 

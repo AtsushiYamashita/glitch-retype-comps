@@ -57,15 +57,12 @@ app.get("/", (request, response) => {
     response.sendFile(__dirname + '/views/index.html');
 });
 app.get("/users", (request, response) => __awaiter(this, void 0, void 0, function* () {
-    var dbUsers = [];
-    const users = yield User.findAll();
-    users.forEach((user) => {
-        dbUsers.push([user.firstName, user.lastName]);
-    });
-    response.send(dbUsers);
+    const users = yield User.findAll().map((user) => { return [user.firstName, user.lastName]; });
+    response.send(users);
 }));
 app.post("/users", (request, response) => __awaiter(this, void 0, void 0, function* () {
-    yield User.create({ firstName: request.query.fName, lastName: request.query.lName });
+    const { firstName, lastName } = request.query;
+    yield User.create({ firstName: firstName, lastName: lastName });
     response.sendStatus(200);
 }));
 app.get("/reset", (request, response) => __awaiter(this, void 0, void 0, function* () {

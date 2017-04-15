@@ -10,10 +10,10 @@ $(function() {
 
   $('form').submit(function(event) {
     event.preventDefault();
-    var fName = $('input#fName').val();
-    var lName = $('input#lName').val();
-    $.post('/users?' + $.param({fName:fName, lName:lName}), function() {
-      $('<li></li>').text(fName + " " + lName).appendTo('ul#users');
+    var fName = $('input#firstName').val();
+    var lName = $('input#lastName').val();
+    $.post('/users?' + $.param({firstName:firstName, lNastame:lastName}), function() {
+      $('<li></li>').text(fifName + " " + lName).appendTo('ul#users');
       $('input#fName').val('');
       $('input#lName').val('');
       $('input').focus();
