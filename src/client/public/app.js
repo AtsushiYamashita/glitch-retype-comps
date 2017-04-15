@@ -70,7 +70,7 @@
 /* 0 */
 /***/ (function(module, exports) {
 
-throw new Error("Module parse failed: /app/src/client/app.tsx Unexpected token (6:4)\nYou may need an appropriate loader to handle this file type.\n| \n| ReactDOM.render(\n|     <Hello compiler=\"TypeScript\" framework=\"React\" />,\n|     document.getElementById(\"example\")\n| );");
+throw new Error("Module parse failed: /app/src/client/app.tsx Unexpected token (6:4)\nYou may need an appropriate loader to handle this file type.\n| \n| ReactDOM.render(\n|     <Hello compiler=\"TypeScript\" framework=\"React\" />,\n|     document.getElementById(\"example\")\n| )");
 
 /***/ })
 /******/ ]);
