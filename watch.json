@@ -4,7 +4,7 @@
       "^package\\.json$",
       "^\\.env$",
       "\\.ts$",
-      "\\.json$"
+      "^tsconfig\\.json$"
     ]
   },
   "throttle": 2500
