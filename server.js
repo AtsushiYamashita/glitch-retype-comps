@@ -2,9 +2,9 @@
 // where your node app starts
 
 // init project
-var express = require('express');
-var Sequelize = require('sequelize');
-var app = express();
+import express from 'express'
+import Sequelize from 'sequelize'
+const app = express();
 
 // default user list
 var users = [
@@ -31,7 +31,7 @@ var sequelize = new Sequelize('database', process.env.DB_USER, process.env.DB_PA
 
 // authenticate with the database
 sequelize.authenticate()
-  .then(function(err) {
+  .then((err) => {
     console.log('Connection has been established successfully.');
     // define a new table 'users'
     User = sequelize.define('users', {
@@ -45,12 +45,12 @@ sequelize.authenticate()
     
     setup();
   })
-  .catch(function (err) {
+  .catch((err) => {
     console.log('Unable to connect to the database: ', err);
   });
 
 // populate table with default users
-function setup(){
+const setup = () => {
   User.sync({force: true}) // using 'force' it drops the table users if it already exists, and creates a new one
     .then(function(){
       // Add the default users to the database
@@ -64,13 +64,13 @@ function setup(){
 app.use(express.static('public'));
 
 // http://expressjs.com/en/starter/basic-routing.html
-app.get("/", function (request, response) {
+app.get("/", (request, response) => {
   response.sendFile(__dirname + '/views/index.html');
 });
 
-app.get("/users", function (request, response) {
+app.get("/users", (request, response) => {
   var dbUsers=[];
-  User.findAll().then(function(users) { // find all entries in the users tables
+  User.findAll().then((users) => { // find all entries in the users tables
     users.forEach(function(user) {
       dbUsers.push([user.firstName,user.lastName]); // adds their info to the dbUsers value
     });
