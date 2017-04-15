@@ -3,6 +3,6 @@ import * as ReactDOM from 'react-dom'
 import { UserList } from "./user_list"
 
 ReactDOM.render(
-    <UserList />,
+    <UserList compiler="TypeScript" framework="React" />,
     document.getElementById("example")
 )
