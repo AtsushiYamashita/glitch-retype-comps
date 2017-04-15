@@ -11,15 +11,13 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const express = require("express");
 const sequelize_1 = require("sequelize");
 const app = express();
-var users = [
+const users = [
     ["John", "Hancock"],
     ["Liz", "Smith"],
     ["Ahmed", "Khan"]
 ];
-var User;
-(() => __awaiter(this, void 0, void 0, function* () {
-}))();
-var sequelize = new sequelize_1.default('database', process.env.DB_USER, process.env.DB_PASS, {
+let User;
+const sequelize = new sequelize_1.default('database', process.env.DB_USER, process.env.DB_PASS, {
     host: '0.0.0.0',
     dialect: 'sqlite',
     pool: {
@@ -29,6 +27,9 @@ var sequelize = new sequelize_1.default('database', process.env.DB_USER, process
     },
     storage: '.data/database.sqlite'
 });
+(() => __awaiter(this, void 0, void 0, function* () {
+    console.log('blah');
+}))();
 sequelize.authenticate()
     .then((err) => {
     console.log('Connection has been established successfully.');

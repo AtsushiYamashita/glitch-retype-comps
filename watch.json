@@ -1,0 +1,11 @@
+{
+  "restart": {
+    "include": [
+      "^package\\.json$",
+      "^\\.env$",
+      "\\.ts$",
+      "\\.json$"
+    ]
+  },
+  "throttle": 2500
+}

@@ -7,20 +7,16 @@ import Sequelize from 'sequelize'
 const app = express();
 
 // default user list
-var users = [
+const users = [
       ["John","Hancock"],
       ["Liz","Smith"],
       ["Ahmed","Khan"]
     ];
-var User;
-
-(async () => {
-  
-})()
+let User;
 
 // setup a new database
 // using database credentials set in .env
-var sequelize = new Sequelize('database', process.env.DB_USER, process.env.DB_PASS, {
+const sequelize = new Sequelize('database', process.env.DB_USER, process.env.DB_PASS, {
   host: '0.0.0.0',
   dialect: 'sqlite',
   pool: {
@@ -32,6 +28,10 @@ var sequelize = new Sequelize('database', process.env.DB_USER, process.env.DB_PA
     // which doesn't get copied if someone remixes the project.
   storage: '.data/database.sqlite'
 });
+
+(async () => {
+  console.log('blah')
+})()
 
 // authenticate with the database
 sequelize.authenticate()
