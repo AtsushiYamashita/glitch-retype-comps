@@ -24,7 +24,11 @@
 	"keywords": [
 		"node",
 		"express",
-		"sqlite3"
+    "sqlite",
+		"sqlite3",
+    "typescript",
+    "react",
+    "webpack"
 	],
 	"license": "MIT"
 }
