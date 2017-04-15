@@ -28,9 +28,9 @@ const sequelize = new Sequelize('database', process.env.DB_USER, process.env.DB_
 function setup() {
     return __awaiter(this, void 0, void 0, function* () {
         yield User.sync({ force: true });
-        for (var i = 0; i < users.length; i++) {
-            User.create({ firstName: users[i][0], lastName: users[i][1] });
-        }
+        users.forEach(user => {
+            User.create({ firstName: user[0], lastName: user[1] });
+        });
     });
 }
 ;
@@ -56,12 +56,12 @@ app.get("/", (request, response) => {
     response.sendFile(__dirname + '/views/index.html');
 });
 app.get("/users", (request, response) => __awaiter(this, void 0, void 0, function* () {
-    const users = yield User.findAll().map((user) => { return [user.firstName, user.lastName]; });
+    const users = yield User.findAll().map(user => [user.firstName, user.lastName]);
     response.send(users);
 }));
 app.post("/users", (request, response) => __awaiter(this, void 0, void 0, function* () {
     const { firstName, lastName } = request.query;
-    yield User.create({ firstName: firstName, lastName: lastName });
+    yield User.create({ firstName, lastName });
     response.sendStatus(200);
 }));
 app.get("/reset", (request, response) => __awaiter(this, void 0, void 0, function* () {
