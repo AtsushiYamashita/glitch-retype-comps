@@ -9,11 +9,13 @@ export class UserList extends React.Component<any, any> {
     }
   
     async componentDidMount() {
-      let users = await fetch('/users')
-      this.setState({})
+      const response = await fetch('/users')
+      const users = response.json()
+      this.setState({users})
     }
   
     render() {
-        return <h1>Hello from {this.props.compiler} and {this.props.framework}!</h1>;
+      let {users} = this.state;
+      return <div>{users}</div>
     }
 }
