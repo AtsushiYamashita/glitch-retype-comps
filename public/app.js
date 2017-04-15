@@ -78,14 +78,36 @@ module.exports = React;
 
 "use strict";
 
+var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : new P(function (resolve) { resolve(result.value); }).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 const React = __webpack_require__(0);
-exports.Hello = (props) => React.createElement("h1", null,
-    "Hello from ",
-    props.compiler,
-    " and ",
-    props.framework,
-    "!!");
+class UserList extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = { users: [] };
+    }
+    componentDidMount() {
+        return __awaiter(this, void 0, void 0, function* () {
+            let users = yield fetch('/users');
+            this.setState({ users });
+        });
+    }
+    render() {
+        let { users } = this.state;
+        return users.map(user => React.createElement("li", null,
+            user.firstName,
+            " ",
+            user.lastName));
+    }
+}
+exports.UserList = UserList;
 
 
 /***/ }),
@@ -100,23 +122,11 @@ module.exports = ReactDOM;
 
 "use strict";
 
-var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
-    return new (P || (P = Promise))(function (resolve, reject) {
-        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
-        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
-        function step(result) { result.done ? resolve(result.value) : new P(function (resolve) { resolve(result.value); }).then(fulfilled, rejected); }
-        step((generator = generator.apply(thisArg, _arguments || [])).next());
-    });
-};
 Object.defineProperty(exports, "__esModule", { value: true });
 const React = __webpack_require__(0);
 const ReactDOM = __webpack_require__(2);
-const hello_1 = __webpack_require__(1);
-let users;
-(() => __awaiter(this, void 0, void 0, function* () {
-    users = yield fetch('/users');
-}))();
-ReactDOM.render(React.createElement(hello_1.Hello, { compiler: "TypeScript", framework: "React" }), document.getElementById("example"));
+const user_list_1 = __webpack_require__(1);
+ReactDOM.render(React.createElement(user_list_1.UserList, null), document.getElementById("example"));
 
 
 /***/ })

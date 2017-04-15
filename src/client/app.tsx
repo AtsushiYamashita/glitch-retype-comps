@@ -1,15 +1,8 @@
 import * as React from 'react'
 import * as ReactDOM from 'react-dom'
-import { Hello } from "./hello"
-import { UserList } from "./user_lsit"
-
-let users
-
-;(async () => {
-  users = await fetch('/users')
-})()
+import { UserList } from "./user_list"
 
 ReactDOM.render(
-    <Hello compiler="TypeScript" framework="React" />,
+    <UserList />,
     document.getElementById("example")
 )
