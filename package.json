@@ -12,7 +12,7 @@
     "sequelize": "^3.30.4",
     "sqlite3": "^3.1.8",
     "typescript": "^2.1.5",
-    "@types/express": "4.0.35"
+    "@types/express": "^4.0.35"
 	},
 	"keywords": [
 		"node",

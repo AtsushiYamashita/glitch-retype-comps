@@ -1,106 +1,83 @@
-// server.js
-// where your node app starts
-
-// init project
-import express from 'express'
-import Sequelize from 'sequelize'
+"use strict";
+var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : new P(function (resolve) { resolve(result.value); }).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+const express = require("express");
+const sequelize_1 = require("sequelize");
 const app = express();
-
-// default user list
 var users = [
-      ["John","Hancock"],
-      ["Liz","Smith"],
-      ["Ahmed","Khan"]
-    ];
+    ["John", "Hancock"],
+    ["Liz", "Smith"],
+    ["Ahmed", "Khan"]
+];
 var User;
-
-(async () => {
-  
-})()
-
-// setup a new database
-// using database credentials set in .env
-var sequelize = new Sequelize('database', process.env.DB_USER, process.env.DB_PASS, {
-  host: '0.0.0.0',
-  dialect: 'sqlite',
-  pool: {
-    max: 5,
-    min: 0,
-    idle: 10000
-  },
-    // Security note: the database is saved to the file `database.sqlite` on the local filesystem. It's deliberately placed in the `.data` directory
-    // which doesn't get copied if someone remixes the project.
-  storage: '.data/database.sqlite'
+(() => __awaiter(this, void 0, void 0, function* () {
+}))();
+var sequelize = new sequelize_1.default('database', process.env.DB_USER, process.env.DB_PASS, {
+    host: '0.0.0.0',
+    dialect: 'sqlite',
+    pool: {
+        max: 5,
+        min: 0,
+        idle: 10000
+    },
+    storage: '.data/database.sqlite'
 });
-
-// authenticate with the database
 sequelize.authenticate()
-  .then((err) => {
+    .then((err) => {
     console.log('Connection has been established successfully.');
-    // define a new table 'users'
     User = sequelize.define('users', {
-      firstName: {
-        type: Sequelize.STRING
-      },
-      lastName: {
-        type: Sequelize.STRING
-      }
+        firstName: {
+            type: sequelize_1.default.STRING
+        },
+        lastName: {
+            type: sequelize_1.default.STRING
+        }
     });
-    
     setup();
-  })
-  .catch((err) => {
+})
+    .catch((err) => {
     console.log('Unable to connect to the database: ', err);
-  });
-
-// populate table with default users
+});
 const setup = () => {
-  User.sync({force: true}) // using 'force' it drops the table users if it already exists, and creates a new one
-    .then(function(){
-      // Add the default users to the database
-      for(var i=0; i<users.length; i++){ // loop through all users
-        User.create({ firstName: users[i][0], lastName: users[i][1]}); // create a new entry in the users table
-      }
-    });  
-}
-
-// http://expressjs.com/en/starter/static-files.html
-app.use(express.static('public'));
-
-// http://expressjs.com/en/starter/basic-routing.html
-app.get("/", (request, response) => {
-  response.sendFile(__dirname + '/views/index.html');
-});
-
-app.get("/users", (request, response) => {
-  var dbUsers=[];
-  User.findAll().then((users) => { // find all entries in the users tables
-    users.forEach(function(user) {
-      dbUsers.push([user.firstName,user.lastName]); // adds their info to the dbUsers value
+    User.sync({ force: true })
+        .then(function () {
+        for (var i = 0; i < users.length; i++) {
+            User.create({ firstName: users[i][0], lastName: users[i][1] });
+        }
     });
-    response.send(dbUsers); // sends dbUsers back to the page
-  });
+};
+app.use(express.static('public'));
+app.get("/", (request, response) => {
+    response.sendFile(__dirname + '/views/index.html');
 });
-
-// creates a new entry in the users table with the submitted values
+app.get("/users", (request, response) => {
+    var dbUsers = [];
+    User.findAll().then((users) => {
+        users.forEach(function (user) {
+            dbUsers.push([user.firstName, user.lastName]);
+        });
+        response.send(dbUsers);
+    });
+});
 app.post("/users", function (request, response) {
-  User.create({ firstName: request.query.fName, lastName: request.query.lName});
-  response.sendStatus(200);
+    User.create({ firstName: request.query.fName, lastName: request.query.lName });
+    response.sendStatus(200);
 });
-
-// drops the table users if it already exists, populates new users table it with just the default users.
 app.get("/reset", function (request, response) {
-  setup();
-  response.redirect("/");
+    setup();
+    response.redirect("/");
 });
-
-// removes all entries from the users table
 app.get("/clear", function (request, response) {
-  User.destroy({where: {}});
-  response.redirect("/");
+    User.destroy({ where: {} });
+    response.redirect("/");
 });
-
-// listen for requests :)
 var listener = app.listen(process.env.PORT, function () {
-  console.log('Your app is listening on port ' + listener.address().port);
+    console.log('Your app is listening on port ' + listener.address().port);
 });
