@@ -37,7 +37,6 @@ function setup() {
 (() => __awaiter(this, void 0, void 0, function* () {
     try {
         yield sequelize.authenticate();
-        console.log('Connection has been established successfully.');
         User = sequelize.define('users', {
             firstName: {
                 type: Sequelize.STRING

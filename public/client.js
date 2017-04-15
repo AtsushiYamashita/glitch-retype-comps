@@ -10,12 +10,12 @@ $(function() {
 
   $('form').submit(function(event) {
     event.preventDefault();
-    var fName = $('input#firstName').val();
-    var lName = $('input#lastName').val();
-    $.post('/users?' + $.param({firstName:firstName, lNastame:lastName}), function() {
-      $('<li></li>').text(fifName + " " + lName).appendTo('ul#users');
-      $('input#fName').val('');
-      $('input#lName').val('');
+    var firstName = $('input#firstName').val();
+    var lastName = $('input#lastName').val();
+    $.post('/users?' + $.param({firstName:firstName, lastame:lastName}), function() {
+      $('<li></li>').text(firstName + " " + lastName).appendTo('ul#users');
+      $('input#firstName').val('');
+      $('input#lastName').val('');
       $('input').focus();
     });
   });

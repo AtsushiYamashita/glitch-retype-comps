@@ -35,7 +35,6 @@ async function setup() {
 ;(async () => {
   try {
     await sequelize.authenticate()
-    console.log('Connection has been established successfully.');
     User = sequelize.define('users', {
       firstName: {
         type: Sequelize.STRING
