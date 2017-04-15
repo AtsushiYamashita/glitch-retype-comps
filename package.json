@@ -4,7 +4,8 @@
 	"description": "Example app showing use of SQLite3 using the Sequelize ORM",
 	"main": "server.js",
 	"scripts": {
-    "build": "tsc --project src/server ",
+    "tsc": "tsc --project src/server",
+    "build": "webpack",
 		"start": "npm run build && node dist/server.js"
 	},
 	"dependencies": {
