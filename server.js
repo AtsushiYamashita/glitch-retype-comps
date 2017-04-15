@@ -1,4 +1,3 @@
-"use strict";
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
     return new (P || (P = Promise))(function (resolve, reject) {
         function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
@@ -7,9 +6,8 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-Object.defineProperty(exports, "__esModule", { value: true });
-const express = require("express");
-const sequelize_1 = require("sequelize");
+const express = require('express');
+const Sequelize = require('sequelize');
 const app = express();
 const users = [
     ["John", "Hancock"],
@@ -17,7 +15,7 @@ const users = [
     ["Ahmed", "Khan"]
 ];
 let User;
-const sequelize = new sequelize_1.default('database', process.env.DB_USER, process.env.DB_PASS, {
+const sequelize = new Sequelize('database', process.env.DB_USER, process.env.DB_PASS, {
     host: '0.0.0.0',
     dialect: 'sqlite',
     pool: {
@@ -42,10 +40,10 @@ function setup() {
         console.log('Connection has been established successfully.');
         User = sequelize.define('users', {
             firstName: {
-                type: sequelize_1.default.STRING
+                type: Sequelize.STRING
             },
             lastName: {
-                type: sequelize_1.default.STRING
+                type: Sequelize.STRING
             }
         });
         yield setup();

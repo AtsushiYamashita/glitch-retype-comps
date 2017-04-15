@@ -1,5 +1,5 @@
-import * as express from 'express'
-import Sequelize from 'sequelize'
+const express = require('express')
+const Sequelize = require('sequelize')
 const app = express()
 
 // default user list
@@ -20,15 +20,14 @@ const sequelize = new Sequelize('database', process.env.DB_USER, process.env.DB_
     min: 0,
     idle: 10000
   },
-    // Security note: the database is saved to the file `database.sqlite` on the local filesystem. It's deliberately placed in the `.data` directory
-    // which doesn't get copied if someone remixes the project.
+    // the `.data` directory isn't copied if someone remixes the project.
   storage: '.data/database.sqlite'
 })
 
 // populate table with default users
 async function setup() {
   await User.sync({force: true}) // using 'force' it drops the table users if it already exists, and creates a new one
-    for(var i=0; i<users.length; i++){ // loop through all users
+    for(var i=0; i<users.length; i++){
       User.create({ firstName: users[i][0], lastName: users[i][1]}); // create a new entry in the users table
     } 
 }
@@ -45,7 +44,7 @@ async function setup() {
         type: Sequelize.STRING
       }
     });
-    await setup();
+    await setup()
   } catch(err) {
     console.log('Unable to connect to the database: ', err)
   }
