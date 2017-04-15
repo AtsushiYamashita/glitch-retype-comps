@@ -4,13 +4,10 @@
 	"description": "Example app showing use of SQLite3 using the Sequelize ORM",
 	"main": "server.js",
 	"scripts": {
-		"start": "babel-node --presets es2015 --plugins syntax-async-functions, transform-generator server.js"
+		"start": "babel-node --presets=es2015 server.js"
 	},
 	"dependencies": {
     "babel-cli": "^6.24.1",
-    "babel-plugin-syntax-async-functions": "^6.24.1",
-    "babel-plugin-transform-regenerator": "^6.24.1",
-    "babel-polyfill": "^6.24.1",
     "babel-preset-es2015": "^6.24.1",
     "express": "^4.15.2",
     "sequelize": "^3.30.4",
