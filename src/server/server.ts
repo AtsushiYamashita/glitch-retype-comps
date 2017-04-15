@@ -1,5 +1,5 @@
-const express = require('express')
-const Sequelize = require('sequelize')
+import * as express from 'express'
+import { Sequelize } from 'sequelize'
 const app = express()
 
 // default user list
