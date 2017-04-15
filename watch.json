@@ -1,10 +1,10 @@
 {
   "restart": {
     "include": [
-      "^package\\.json$",
-      "^\\.env$",
-      "src/**/*\\.ts$",
-      "src/**/tsconfig\\.json$"
+      "^package.json$",
+      "^.env$",
+      "src/**/*.ts",
+      "src/**/tsconfig.json$"
     ]
   },
   "throttle": 2500

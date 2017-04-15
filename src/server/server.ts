@@ -51,10 +51,6 @@ async function setup() {
 
 app.use(express.static('public'));
 
-app.get("/", (request, response) => {
-  response.sendFile(__dirname + '/views/index.html');
-});
-
 app.get("/users", async (request, response) => {
   const users = await User.findAll().map(user => [user.firstName, user.lastName])
   response.send(users);
