@@ -27,25 +27,6 @@ const sequelize = new sequelize_1.default('database', process.env.DB_USER, proce
     },
     storage: '.data/database.sqlite'
 });
-(() => __awaiter(this, void 0, void 0, function* () {
-    console.log('blah');
-}))();
-sequelize.authenticate()
-    .then((err) => {
-    console.log('Connection has been established successfully.');
-    User = sequelize.define('users', {
-        firstName: {
-            type: sequelize_1.default.STRING
-        },
-        lastName: {
-            type: sequelize_1.default.STRING
-        }
-    });
-    setup();
-})
-    .catch((err) => {
-    console.log('Unable to connect to the database: ', err);
-});
 const setup = () => {
     User.sync({ force: true })
         .then(function () {
@@ -54,6 +35,24 @@ const setup = () => {
         }
     });
 };
+(() => __awaiter(this, void 0, void 0, function* () {
+    try {
+        yield sequelize.authenticate();
+        console.log('Connection has been established successfully.');
+        User = sequelize.define('users', {
+            firstName: {
+                type: sequelize_1.default.STRING
+            },
+            lastName: {
+                type: sequelize_1.default.STRING
+            }
+        });
+        setup();
+    }
+    catch (err) {
+        console.log('Unable to connect to the database: ', err);
+    }
+}))();
 app.use(express.static('public'));
 app.get("/", (request, response) => {
     response.sendFile(__dirname + '/views/index.html');

@@ -8,7 +8,8 @@
     },
     "include": [
         "typings/main.d.ts",
-        "server.ts"
+        "*.ts",
+        "public/*.ts"
     ],
     "exclude": [
         "node_modules",
