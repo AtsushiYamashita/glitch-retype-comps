@@ -5,7 +5,7 @@
 	"main": "server.js",
 	"scripts": {
     "build": "tsc --project src/server && webpack --config src/client/webpack.config.js",
-		"start": "npm run build && node dist/server.js"
+		"start": "npm run build && node dist/server/server.js"
 	},
 	"dependencies": {
     "awesome-typescript-loader": "^3.1.2",

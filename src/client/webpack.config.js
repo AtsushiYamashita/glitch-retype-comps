@@ -21,19 +21,16 @@ module.exports = {
             {
               test: /\.tsx?$/,
               loader: "awesome-typescript-loader",
-              include: [
-                path.resolve(__dirname, "src", "client")
-              ]
+              options: {
+                configFileName: path.resolve(__dirname, "tsconfig.json")
+              }
             },
 
             // All output '.js' files will have any sourcemaps re-processed by 'source-map-loader'.
             {
               enforce: "pre",
               test: /\.js$/,
-              loader: "source-map-loader",
-              include: [
-                path.resolve(__dirname, "src", "client")
-              ]
+              loader: "source-map-loader"
             }
         ]
     },

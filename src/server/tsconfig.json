@@ -4,7 +4,7 @@
         "noImplicitAny": false,
         "removeComments": true,
         "target": "es6",
-        "outDir": "../../dist"
+        "outDir": "../../dist/server"
     },
     "include": [
         "typings/main.d.ts",
