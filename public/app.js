@@ -78,40 +78,14 @@ module.exports = React;
 
 "use strict";
 
-var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
-    return new (P || (P = Promise))(function (resolve, reject) {
-        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
-        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
-        function step(result) { result.done ? resolve(result.value) : new P(function (resolve) { resolve(result.value); }).then(fulfilled, rejected); }
-        step((generator = generator.apply(thisArg, _arguments || [])).next());
-    });
-};
 Object.defineProperty(exports, "__esModule", { value: true });
 const React = __webpack_require__(0);
-class UserList extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state = { users: [] };
-        console.log(props);
-    }
-    componentDidMount() {
-        return __awaiter(this, void 0, void 0, function* () {
-            const response = yield fetch('/users');
-            const users = yield response.json();
-            this.setState({ users: users });
-        });
-    }
-    render() {
-        let { users } = this.state;
-        return (React.createElement("div", null,
-            React.createElement("p", null, "Users:"),
-            React.createElement("ul", null, users.map(user => (React.createElement("li", null,
-                user[0],
-                " ",
-                user[1]))))));
-    }
-}
-exports.UserList = UserList;
+exports.UserList = ({ users }) => (React.createElement("div", null,
+    React.createElement("p", null, "Users:"),
+    React.createElement("ul", null, users.map(user => (React.createElement("li", null,
+        user[0],
+        " ",
+        user[1]))))));
 
 
 /***/ }),
@@ -126,11 +100,31 @@ module.exports = ReactDOM;
 
 "use strict";
 
+var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : new P(function (resolve) { resolve(result.value); }).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 const React = __webpack_require__(0);
 const ReactDOM = __webpack_require__(2);
 const user_list_1 = __webpack_require__(1);
-ReactDOM.render(React.createElement(user_list_1.UserList, { foo: ["bar", "baz"] }), document.getElementById("users-container"));
+function onUserAdded() {
+    return __awaiter(this, void 0, void 0, function* () {
+        render(users);
+    });
+}
+function render() {
+    return __awaiter(this, void 0, void 0, function* () {
+        const resp = yield fetch('/users');
+        const users = yield resp.json();
+        ReactDOM.render(React.createElement(user_list_1.UserList, { users: users }), document.getElementById("users-container"));
+    });
+}
+render();
 
 
 /***/ })
