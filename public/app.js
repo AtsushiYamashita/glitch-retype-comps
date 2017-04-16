@@ -84,9 +84,13 @@ exports.UserForm = ({ onUserAdded }) => {
     let firstName, lastName;
     return (React.createElement("div", null,
         React.createElement("p", null, "Add a new user:"),
-        React.createElement("form", null,
+        React.createElement("form", { onSubmit: e => {
+                e.preventDefault();
+                onUserAdded({ firstName, lastName });
+                firstName = lastName = '';
+            } },
             React.createElement("input", { ref: node => { firstName = node; }, type: "text", placeholder: "John" }),
-            React.createElement("input", { id: "lastName", type: "text", placeholder: "Hancock" }),
+            React.createElement("input", { ref: node => { lastName = node; }, type: "text", placeholder: "Hancock" }),
             React.createElement("button", { type: "submit" }, "Submit"))));
 };
 
@@ -132,8 +136,12 @@ const React = __webpack_require__(0);
 const ReactDOM = __webpack_require__(3);
 const user_form_1 = __webpack_require__(1);
 const user_list_1 = __webpack_require__(2);
-function onUserAdded() {
+function onUserAdded(user) {
     return __awaiter(this, void 0, void 0, function* () {
+        yield fetch('/users', {
+            method: 'POST',
+            body: JSON.stringify(user)
+        });
         yield render();
     });
 }

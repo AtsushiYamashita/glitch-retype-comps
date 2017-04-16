@@ -59,7 +59,7 @@ app.get("/users", async (request, response) => {
 // creates a new entry in the users table with the submitted values
 app.post("/users", async (request, response) => {
   // destructuring: http://es6-features.org/#ObjectMatchingShorthandNotation
-  const {firstName, lastName} = request.query
+  const {firstName, lastName} = request.body
   // property shorthand: http://es6-features.org/#PropertyShorthand
   await User.create({firstName, lastName});
   response.sendStatus(200);
