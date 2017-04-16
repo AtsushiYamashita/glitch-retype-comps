@@ -81,16 +81,19 @@ module.exports = React;
 Object.defineProperty(exports, "__esModule", { value: true });
 const React = __webpack_require__(0);
 exports.UserForm = ({ onUserAdded }) => {
-    let firstName, lastName;
+    let firstNameInput, lastNameInput;
     return (React.createElement("div", null,
         React.createElement("p", null, "Add a new user:"),
         React.createElement("form", { onSubmit: e => {
                 e.preventDefault();
-                onUserAdded({ firstName, lastName });
-                firstName = lastName = '';
+                onUserAdded({
+                    firstName: firstNameInput.value.trim(),
+                    lastName: lastNameInput.value.trim()
+                });
+                firstNameInput.value = lastNameInput.value = '';
             } },
-            React.createElement("input", { ref: node => { firstName = node; }, type: "text", placeholder: "John" }),
-            React.createElement("input", { ref: node => { lastName = node; }, type: "text", placeholder: "Hancock" }),
+            React.createElement("input", { ref: node => { firstNameInput = node; }, type: "text", placeholder: "John" }),
+            React.createElement("input", { ref: node => { lastNameInput = node; }, type: "text", placeholder: "Hancock" }),
             React.createElement("button", { type: "submit" }, "Submit"))));
 };
 
@@ -136,11 +139,10 @@ const React = __webpack_require__(0);
 const ReactDOM = __webpack_require__(3);
 const user_form_1 = __webpack_require__(1);
 const user_list_1 = __webpack_require__(2);
-function onUserAdded(user) {
+function onUserAdded({ firstName, lastName }) {
     return __awaiter(this, void 0, void 0, function* () {
-        yield fetch('/users', {
-            method: 'POST',
-            body: JSON.stringify(user)
+        yield fetch(`/users?firstName=${firstName}&lastName=${lastName}`, {
+            method: 'POST'
         });
         yield render();
     });

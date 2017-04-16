@@ -3,10 +3,9 @@ import * as ReactDOM from 'react-dom'
 import { UserForm } from './user_form'
 import { UserList } from './user_list'
 
-async function onUserAdded(user) {
-  await fetch('/users', {
-    method: 'POST',
-    body: JSON.stringify(user)
+async function onUserAdded({firstName, lastName}) {
+  await fetch(`/users?firstName=${firstName}&lastName=${lastName}`, {
+    method: 'POST'
   })
   await render()
 }
