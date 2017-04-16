@@ -12,15 +12,17 @@ export class UserList extends React.Component<any, any> {
       const response = await fetch('/users')
       const users = await response.json()
       console.log(users)
-      this.setState({users})
+      this.setState({users: users})
     }
   
     render() {
       let {users} = this.state
       return (
-        {users.map(user =>
-          <li key={user.firstName + user.lastName}>{user.firstName} {user.lastName}</li>
-        })
-      )
+        <ul>
+          {users.map(user => (
+            <li>{user[0]} {user[1]}</li>
+          ))}
+        </ul>
+      );
     }
 }

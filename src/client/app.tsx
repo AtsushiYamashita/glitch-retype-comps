@@ -4,5 +4,5 @@ import { UserList } from "./user_list"
 
 ReactDOM.render(
     <UserList />,
-    document.getElementById("example")
+    document.getElementById("users-container")
 )
