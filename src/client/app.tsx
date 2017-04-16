@@ -3,6 +3,6 @@ import * as ReactDOM from 'react-dom'
 import { UserList } from "./user_list"
 
 ReactDOM.render(
-    <UserList />,
+    <UserList foo={["bar", "baz"]} />,
     document.getElementById("users-container")
 )

@@ -92,21 +92,23 @@ class UserList extends React.Component {
     constructor(props) {
         super(props);
         this.state = { users: [] };
+        console.log(props);
     }
     componentDidMount() {
         return __awaiter(this, void 0, void 0, function* () {
             const response = yield fetch('/users');
             const users = yield response.json();
-            console.log(users);
             this.setState({ users: users });
         });
     }
     render() {
         let { users } = this.state;
-        return (React.createElement("ul", null, users.map(user => (React.createElement("li", null,
-            user[0],
-            " ",
-            user[1])))));
+        return (React.createElement("div", null,
+            React.createElement("p", null, "Users:"),
+            React.createElement("ul", null, users.map(user => (React.createElement("li", null,
+                user[0],
+                " ",
+                user[1]))))));
     }
 }
 exports.UserList = UserList;
@@ -128,7 +130,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const React = __webpack_require__(0);
 const ReactDOM = __webpack_require__(2);
 const user_list_1 = __webpack_require__(1);
-ReactDOM.render(React.createElement(user_list_1.UserList, null), document.getElementById("users-container"));
+ReactDOM.render(React.createElement(user_list_1.UserList, { foo: ["bar", "baz"] }), document.getElementById("users-container"));
 
 
 /***/ })

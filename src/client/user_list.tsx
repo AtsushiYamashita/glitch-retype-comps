@@ -6,23 +6,26 @@ export class UserList extends React.Component<any, any> {
     constructor(props) {
       super(props)
       this.state = {users: []}
+      console.log(props)
     }
   
     async componentDidMount() {
       const response = await fetch('/users')
       const users = await response.json()
-      console.log(users)
       this.setState({users: users})
     }
   
     render() {
       let {users} = this.state
       return (
-        <ul>
-          {users.map(user => (
-            <li>{user[0]} {user[1]}</li>
-          ))}
-        </ul>
+        <div>
+          <p>Users:</p>
+          <ul>
+            {users.map(user => (
+              <li>{user[0]} {user[1]}</li>
+            ))}
+          </ul>
+        </div>
       );
     }
 }
