@@ -15,7 +15,7 @@ async function render() {
   const users = await resp.json()
   ReactDOM.render(
     <UserForm onUserAdded={onUserAdded} />,
-    document.getElementById('users-form')
+    document.getElementById('user-form')
   )
   ReactDOM.render(
     <UserList users={users} />,
