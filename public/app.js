@@ -70,43 +70,13 @@
 /* 0 */
 /***/ (function(module, exports) {
 
-module.exports = React;
+throw new Error("Module parse failed: /app/node_modules/awesome-typescript-loader/dist/entry.js??ref--0!/app/src/client/user_list.tsx Unexpected token (27:25)\nYou may need an appropriate loader to handle this file type.\n|     render() {\r\n|         let { users } = this.state;\r\n|         return ({ users: .map(user => React.createElement(\"li\", { key: user.firstName + user.lastName },\r\n|                 user.firstName,\r\n|                 \" \",\r");
 
 /***/ }),
 /* 1 */
-/***/ (function(module, exports, __webpack_require__) {
+/***/ (function(module, exports) {
 
-"use strict";
-
-var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
-    return new (P || (P = Promise))(function (resolve, reject) {
-        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
-        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
-        function step(result) { result.done ? resolve(result.value) : new P(function (resolve) { resolve(result.value); }).then(fulfilled, rejected); }
-        step((generator = generator.apply(thisArg, _arguments || [])).next());
-    });
-};
-Object.defineProperty(exports, "__esModule", { value: true });
-const React = __webpack_require__(0);
-class UserList extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state = { users: [] };
-    }
-    componentDidMount() {
-        return __awaiter(this, void 0, void 0, function* () {
-            const response = yield fetch('/users');
-            const users = response.json();
-            this.setState({ users });
-        });
-    }
-    render() {
-        let { users } = this.state;
-        return React.createElement("div", null, users);
-    }
-}
-exports.UserList = UserList;
-
+module.exports = React;
 
 /***/ }),
 /* 2 */
@@ -121,9 +91,9 @@ module.exports = ReactDOM;
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
-const React = __webpack_require__(0);
+const React = __webpack_require__(1);
 const ReactDOM = __webpack_require__(2);
-const user_list_1 = __webpack_require__(1);
+const user_list_1 = __webpack_require__(0);
 ReactDOM.render(React.createElement(user_list_1.UserList, null), document.getElementById("example"));
 
 
