@@ -63,7 +63,7 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 3);
+/******/ 	return __webpack_require__(__webpack_require__.s = 4);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -80,6 +80,25 @@ module.exports = React;
 
 Object.defineProperty(exports, "__esModule", { value: true });
 const React = __webpack_require__(0);
+exports.UserForm = ({ onUserAdded }) => {
+    let firstName, lastName;
+    return (React.createElement("div", null,
+        React.createElement("p", null, "Add a new user:"),
+        React.createElement("form", null,
+            React.createElement("input", { ref: node => { firstName = node; }, type: "text", placeholder: "John" }),
+            React.createElement("input", { id: "lastName", type: "text", placeholder: "Hancock" }),
+            React.createElement("button", { type: "submit" }, "Submit"))));
+};
+
+
+/***/ }),
+/* 2 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", { value: true });
+const React = __webpack_require__(0);
 exports.UserList = ({ users }) => (React.createElement("div", null,
     React.createElement("p", null, "Users:"),
     React.createElement("ul", null, users.map(user => (React.createElement("li", null,
@@ -89,13 +108,13 @@ exports.UserList = ({ users }) => (React.createElement("div", null,
 
 
 /***/ }),
-/* 2 */
+/* 3 */
 /***/ (function(module, exports) {
 
 module.exports = ReactDOM;
 
 /***/ }),
-/* 3 */
+/* 4 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -110,18 +129,20 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const React = __webpack_require__(0);
-const ReactDOM = __webpack_require__(2);
-const user_list_1 = __webpack_require__(1);
+const ReactDOM = __webpack_require__(3);
+const user_form_1 = __webpack_require__(1);
+const user_list_1 = __webpack_require__(2);
 function onUserAdded() {
     return __awaiter(this, void 0, void 0, function* () {
-        render(users);
+        yield render();
     });
 }
 function render() {
     return __awaiter(this, void 0, void 0, function* () {
         const resp = yield fetch('/users');
         const users = yield resp.json();
-        ReactDOM.render(React.createElement(user_list_1.UserList, { users: users }), document.getElementById("users-container"));
+        ReactDOM.render(React.createElement(user_form_1.UserForm, { onUserAdded: onUserAdded }), document.getElementById('users-form'));
+        ReactDOM.render(React.createElement(user_list_1.UserList, { users: users }), document.getElementById('users-container'));
     });
 }
 render();
