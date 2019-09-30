@@ -1,7 +1,7 @@
 # Content
-Base app using express, sqlite3, sequelize, react, typescript, react, async/await, and webpack
+Base app using express, react, typescript, react, and webpack
 
-Originally remixed from: [https://glitch.com/~sqlite3-db](https://glitch.com/~sqlite3-db)
+Originally remixed from: [https://glitch.com/~typescript-react-sqlite-express-base](https://glitch.com/~typescript-react-sqlite-express-base)
 
 ## Getting Started
-Remix and specify a username and password for your database by setting `DB_USER` and `DB_PASS` in `.env`.
+Remix this project.

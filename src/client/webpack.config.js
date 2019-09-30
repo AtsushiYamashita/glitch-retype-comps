@@ -2,6 +2,7 @@ const path = require('path')
 
 
 module.exports = {
+  mode: 'development',
   entry: "./src/client/index.tsx",
   output: {
       filename: "app.js",
@@ -10,7 +11,6 @@ module.exports = {
 
   // Enable sourcemaps for debugging webpack's output.
   devtool: "source-map",
-  watch: true,
 
   resolve: {
     // Add '.ts' and '.tsx' as resolvable extensions.
