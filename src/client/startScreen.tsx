@@ -1,6 +1,6 @@
 import * as React from "react"
 
-export const StartScreen = () => (
+export default () => (
   <div>
     Hello Glitch!
   </div>
