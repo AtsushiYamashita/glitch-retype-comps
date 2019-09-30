@@ -3,7 +3,7 @@
     "include": [
       "^package\\.json$",
       "^.env$",
-      "^src.*\\.tsx?$",
+      "^src\\server\\.tsx?$",
       "tsconfig.json$",
       "\\.config\\.js$"
     ]
